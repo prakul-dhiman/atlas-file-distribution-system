@@ -1,0 +1,75 @@
+# Atlas - File Distribution System
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+secrets/
+credentials/
+
+# Java / Spring Boot
+**/target/
+**/*.class
+**/*.jar
+**/*.war
+
+# Node / Frontend
+**/node_modules/
+**/dist/
+**/build/
+**/.vite/
+**/.next/
+**/.cache/
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime / local data
+**/storage-data/
+**/node_data/
+**/scratch/
+**/uploads/
+**/tmp/
+**/temp/
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Docker local data
+docker-data/
+docker-volumes/
+
+# Ngrok
+ngrok.exe
+.ngrok/
+project-atlas.zip
+compile.log
+ngrok-backend.log
+ngrok-frontend.log
+ngrok.exe
+backend/maven/
+frontend/npm_install2.txt
+frontend/npm_install3.txt

@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sdfds-postgres
+    environment:
+      POSTGRES_DB: sdfds_db
+      POSTGRES_USER: sdfds_user
+      POSTGRES_PASSWORD: sdfds_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sdfds_user -d sdfds_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sdfds-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sdfds-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sdfds-network
+
+networks:
+  sdfds-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
