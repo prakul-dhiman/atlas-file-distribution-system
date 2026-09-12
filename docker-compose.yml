@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+
   postgres:
     image: postgres:16-alpine
     container_name: sdfds-postgres
@@ -32,6 +31,40 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - sdfds-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sdfds-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sdfds_db
+      SPRING_DATASOURCE_USERNAME: sdfds_user
+      SPRING_DATASOURCE_PASSWORD: sdfds_password
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sdfds-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sdfds-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     networks:
       - sdfds-network
 
